@@ -1,0 +1,15 @@
+{
+    "name": "VideoFeed",
+    "version": "1.0.0",
+    "description": "Video Feed",
+    "author": "kobybg",
+    "main": "server.js",
+    "dependencies": {
+        "express": "~4.7.2",
+        "underscore": "~1.8.3",
+        "request": "~2.83"
+    },
+    "scripts": {
+        "start": "node app.js"
+    }
+}

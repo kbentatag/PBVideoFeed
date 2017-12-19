@@ -1,0 +1,67 @@
+<!doctype html>
+
+<html ng-app="videoFeedApp">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>My Video Feed</title>
+
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="./css/style.css" rel="stylesheet">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+        <script src="./javascript/core.js"></script>
+
+    </head>
+
+    <body ng-controller="mainController">
+        <div class="container">
+            <nav class="navbar navbar-default">
+                <div class="text-center">
+                    <h2>Video Feed</h2>
+                </div>
+            </nav>
+            <label>Source: </label>
+            <select ng-model="selectedSource" ng-options="x for x in sources" ng-change="filterFeedBySource(selectedSource)" class="caps" >
+                <option value="">All</option>
+            </select>
+
+            <div class="container videoBlock">
+                <div class="row video" ng-repeat="video in videos">
+                    <div ng-if="video.source !== undefined && video.title !== undefined && video.views !== undefined">
+                        <div class="row" style="padding:15px;">
+                            <div class="videoTitle">{{ video.title}}</div>
+                            <div class="videoViews">{{ formatNumberWithSuffix(video.views)}} Views</div>
+                        </div>
+                        <div class="row">
+                            <div ng-if="video.source === 'youtube'">
+                                <div class="videoContainer">
+                                    <iframe src="{{getYoutubeIframeSrc(video.videoId)}}" frameborder="0" allowfullscreen></iframe>
+                                </div>
+<!--                                <div ng-include="'youtube.html'"></div>-->
+                            </div>
+
+                            <div ng-if="video.source === 'facebook'">
+                                <div class="videoContainer">
+                                    <iframe src="{{getFacebookIframeSrc(video.videoId)}}" frameborder="0" allowfullscreen></iframe>
+                                </div>    
+                                <!--<div ng-include="'facebook.html'"></div>-->
+                            </div>
+                            <div ng-if="video.source === 'url'">
+                                <video controls>
+                                    <source src="{{ video.url}}" type="video/mp4">
+                                </video>
+                            </div>
+                            <!--<div ng-include="'url.html'"></div>-->
+                        </div>
+                    </div>
+                    <div ng-if="video.source === undefined || video.title === undefined || video.views === undefined">
+                        <span class="caps">{{video.source}}</span> video is missing
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
